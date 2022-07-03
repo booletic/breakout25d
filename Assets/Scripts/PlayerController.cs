@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10.0f;
+    public float speed;
     public float horizontalInput;
-    public float boundry = 16.0f;
+    public float boundry;
 
-    public GameObject projectile;
-    public Rigidbody projectileRb;
-    public Projectile projectileScript;
+    private GameObject projectile;
+    private Rigidbody projectileRb;
+    private Projectile projectileScript;
 
     // Start is called before the first frame update
     void Start()
@@ -30,13 +30,13 @@ public class PlayerController : MonoBehaviour
         // limit pedal right movement
         if (transform.position.x > boundry)
         {
-            transform.position = new Vector3(boundry, 1, 0);
+            transform.position = new Vector3(boundry, transform.position.y, transform.position.z);
         }
 
         // limit pedal left movement
         if (transform.position.x < -boundry)
         {
-            transform.position = new Vector3(-boundry, 1, 0);
+            transform.position = new Vector3(-boundry, transform.position.y, transform.position.z);
         }
 
         // launch projectile on user-input
