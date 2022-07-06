@@ -12,12 +12,16 @@ public class PlayerController : MonoBehaviour
     private Rigidbody projectileRb;
     private Projectile projectileScript;
 
+    public GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
         projectile = GameObject.Find("Projectile");
         projectileRb = projectile.GetComponent<Rigidbody>();
         projectileScript = projectile.GetComponent<Projectile>();
+
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -42,10 +46,11 @@ public class PlayerController : MonoBehaviour
         // launch projectile on user-input
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (projectileRb.velocity.magnitude == 0)
+            if (!gameManager.projectileInMotion)
             {
                 float projectileSpeed = projectileScript.speed;
                 projectileRb.AddForce(Vector3.forward * projectileSpeed, ForceMode.Impulse);
+                gameManager.projectileInMotion = true;
             }
         }
     }
