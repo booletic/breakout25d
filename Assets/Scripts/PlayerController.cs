@@ -8,18 +8,11 @@ public class PlayerController : MonoBehaviour
     public float horizontalInput;
     public float boundry;
 
-    private GameObject projectile;
-    private Rigidbody projectileRb;
-    private Projectile projectileScript;
     private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        projectile = GameObject.Find("Projectile");
-        projectileRb = projectile.GetComponent<Rigidbody>();
-        projectileScript = projectile.GetComponent<Projectile>();
-
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
@@ -47,10 +40,14 @@ public class PlayerController : MonoBehaviour
         {
             if (!gameManager.projectileInMotion)
             {
+                GameObject projectile = GameObject.FindGameObjectWithTag("Projectile");
+                Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+                Projectile projectileScript = projectile.GetComponent<Projectile>();
+
                 float projectileSpeed = projectileScript.speed;
 
                 projectileRb.AddForce(
-                    new Vector3 (
+                    new Vector3(
                         Random.Range(-1.0f, 1.01f), 0, 1) * projectileSpeed,
                     ForceMode.Impulse);
 

@@ -5,19 +5,31 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject player;
-    public GameObject projectile;
-    private Rigidbody projectileRb;
+    public GameObject projectilePrefab;
     public bool projectileInMotion;
+
+    private GameObject projectile;
+    private Rigidbody projectileRb;
+    private Projectile projectileScript;
+
 
     void Start()
     {
         projectileInMotion = false;
-        projectileRb = projectile.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // spawn a new projectile after destroy
+        if (projectile == null)
+        {
+            Instantiate(projectilePrefab);
+            projectile = GameObject.FindWithTag("Projectile");
+            projectileRb = projectile.GetComponent<Rigidbody>();
+            projectileScript = projectile.GetComponent<Projectile>();
+        }
+
         // projectile tracks player
         if (!projectileInMotion)
         {
@@ -26,6 +38,13 @@ public class GameManager : MonoBehaviour
                 projectile.transform.position.y,
                 projectile.transform.position.z);
         }
+        
+        // destroy projectile if out of boundy
+        if (projectile.transform.position.z < -20)
+        {
+            projectileInMotion = false;
+            Destroy(obj: projectile);
+            projectile = null;
+        }
     }
-
 }
