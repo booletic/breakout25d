@@ -11,8 +11,7 @@ public class PlayerController : MonoBehaviour
     private GameObject projectile;
     private Rigidbody projectileRb;
     private Projectile projectileScript;
-
-    public GameManager gameManager;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         // user-input to move pedal sideways
         horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(horizontalInput * speed * Time.deltaTime * Vector3.down);
+        transform.Translate(horizontalInput * speed * Time.deltaTime * Vector3.right);
 
         // limit pedal right movement
         if (transform.position.x > boundry)

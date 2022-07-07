@@ -26,6 +26,6 @@ public class GameManager : MonoBehaviour
                 projectile.transform.position.y,
                 projectile.transform.position.z);
         }
-        
     }
+
 }
