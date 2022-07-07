@@ -16,20 +16,15 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         projectileInMotion = false;
+        Instantiate(projectilePrefab);
+        projectile = GameObject.FindWithTag("Projectile");
+        projectileRb = projectile.GetComponent<Rigidbody>();
+        projectileScript = projectile.GetComponent<Projectile>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // spawn a new projectile after destroy
-        if (projectile == null)
-        {
-            Instantiate(projectilePrefab);
-            projectile = GameObject.FindWithTag("Projectile");
-            projectileRb = projectile.GetComponent<Rigidbody>();
-            projectileScript = projectile.GetComponent<Projectile>();
-        }
-
         // projectile tracks player
         if (!projectileInMotion)
         {
@@ -43,8 +38,9 @@ public class GameManager : MonoBehaviour
         if (projectile.transform.position.z < -20)
         {
             projectileInMotion = false;
-            Destroy(obj: projectile);
-            projectile = null;
+            projectileRb.velocity = new Vector3(0, 0, 0);
+            projectile.transform.position = new Vector3(
+                player.transform.position.x, 0.5f, -10.75f);
         }
     }
 }
