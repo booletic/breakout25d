@@ -49,7 +49,12 @@ public class PlayerController : MonoBehaviour
             if (!gameManager.projectileInMotion)
             {
                 float projectileSpeed = projectileScript.speed;
-                projectileRb.AddForce(Vector3.forward * projectileSpeed, ForceMode.Impulse);
+
+                projectileRb.AddForce(
+                    new Vector3 (
+                        Random.Range(-1.0f, 1.01f), 0, 1) * projectileSpeed,
+                    ForceMode.Impulse);
+
                 gameManager.projectileInMotion = true;
             }
         }

@@ -18,9 +18,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // projectile tracks player
         if (!projectileInMotion)
         {
-            projectile.transform.position = player.transform.position + new Vector3(0, 0, 1);
+            projectile.transform.position = new Vector3(
+                player.transform.position.x, 
+                projectile.transform.position.y,
+                projectile.transform.position.z);
         }
         
     }
