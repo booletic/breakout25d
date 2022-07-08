@@ -19,9 +19,22 @@ public class Projectile : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        // if projectile collides with enemy
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
+        }
+        // to avoid projectile from stuck bouncing horizonally
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            if (gameObject.transform.position.z <= 0)
+            {
+                gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward, ForceMode.Impulse);
+            }
+            else
+            {
+                gameObject.GetComponent<Rigidbody>().AddForce(Vector3.back, ForceMode.Impulse);
+            }
         }
     }
 }

@@ -36,6 +36,26 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(-boundry, transform.position.y, transform.position.z);
         }
 
+        // for testing purpose
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+
+            if (!gameManager.projectileInMotion)
+            {
+                GameObject projectile = GameObject.FindGameObjectWithTag("Projectile");
+                Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
+                Projectile projectileScript = projectile.GetComponent<Projectile>();
+
+                float projectileSpeed = projectileScript.speed;
+
+                projectileRb.AddForce(
+                        Vector3.right * projectileSpeed,
+                    ForceMode.Impulse);
+
+                gameManager.projectileInMotion = true;
+            }
+        }
+
         // launch projectile on user-input
         if (Input.GetKeyDown(KeyCode.Space))
         {
