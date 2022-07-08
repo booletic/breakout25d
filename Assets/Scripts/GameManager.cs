@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
                 projectile.transform.position.z);
         }
         
-        // destroy projectile if out of boundy
+        // reset projectile if out of boundy
         if (projectile.transform.position.z < -20)
         {
             projectileInMotion = false;

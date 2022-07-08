@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
         // for testing purpose
         if (Input.GetKeyDown(KeyCode.T))
         {
-
             if (!gameManager.projectileInMotion)
             {
                 GameObject projectile = GameObject.FindGameObjectWithTag("Projectile");

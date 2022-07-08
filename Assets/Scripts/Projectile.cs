@@ -24,7 +24,8 @@ public class Projectile : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
-        // to avoid projectile from stuck bouncing horizonally
+
+        // avoid projectile from parallel bouncing horizontally
         if (collision.gameObject.CompareTag("Wall"))
         {
             if (gameObject.transform.position.z <= 0)
@@ -35,6 +36,18 @@ public class Projectile : MonoBehaviour
             {
                 gameObject.GetComponent<Rigidbody>().AddForce(Vector3.back, ForceMode.Impulse);
             }
+        }
+
+        // if projectile collide with player right-side
+        if (collision.gameObject.CompareTag("Right"))
+        {
+            GetComponent<Rigidbody>().AddForce(0.5f * speed * Vector3.right, ForceMode.Impulse);
+        }
+
+        // if projectile collide with player left-side
+        if (collision.gameObject.CompareTag("Left"))
+        {
+            GetComponent<Rigidbody>().AddForce(0.5f * speed * Vector3.left, ForceMode.Impulse);
         }
     }
 }
