@@ -38,12 +38,16 @@ public class GameManager : MonoBehaviour
         // reset projectile if out of boundy
         if (projectile.transform.position.z < -20)
         {
+            audioSource.PlayOneShot(hurtAC);
+
+            // reset to default size if projectile growth powerup is active
+            projectileScript.hasPowerup = false;
+            projectile.transform.localScale = new Vector3(0.8f, 0.5f, 0.8f);
+
             projectileInMotion = false;
             projectileRb.velocity = new Vector3(0, 0, 0);
             projectile.transform.position = player.transform.Find(
                 "Projectile Placeholder").transform.position;
-
-            audioSource.PlayOneShot(hurtAC);
         }
     }
 }

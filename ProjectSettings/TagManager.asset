@@ -9,6 +9,7 @@ TagManager:
   - Projectile
   - Right
   - Left
+  - Powerup
   layers:
   - Default
   - TransparentFX

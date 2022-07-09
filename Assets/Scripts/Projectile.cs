@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,20 +8,27 @@ public class Projectile : MonoBehaviour
     public float speed;
     public AudioClip blipAC;
     public AudioClip hitAC;
+    public bool hasPowerup;
 
     private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        hasPowerup = false;
         audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (hasPowerup)
+        {
+            StartCoroutine(ScalePowerupRoutine());
+        }
 
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         // if projectile collides with enemy
@@ -58,5 +66,14 @@ public class Projectile : MonoBehaviour
             audioSource.PlayOneShot(blipAC);
             GetComponent<Rigidbody>().AddForce(0.5f * speed * Vector3.left, ForceMode.Impulse);
         }
+    }
+
+    IEnumerator ScalePowerupRoutine()
+    {
+        // grow projectile temprorary
+        hasPowerup = false;
+        transform.localScale = new Vector3(1.6f, 0.5f, 1.6f);
+        yield return new WaitForSeconds(5);
+        transform.localScale = new Vector3(0.8f, 0.5f, 0.8f);
     }
 }
