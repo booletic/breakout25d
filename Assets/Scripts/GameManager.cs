@@ -7,10 +7,12 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject projectilePrefab;
     public bool projectileInMotion;
+    public AudioClip hurtAC;
 
     private GameObject projectile;
     private Rigidbody projectileRb;
     private Projectile projectileScript;
+    private AudioSource audioSource;
 
 
     void Start()
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
         projectile = GameObject.FindWithTag("Projectile");
         projectileRb = projectile.GetComponent<Rigidbody>();
         projectileScript = projectile.GetComponent<Projectile>();
+        audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,10 +31,8 @@ public class GameManager : MonoBehaviour
         // projectile tracks player
         if (!projectileInMotion)
         {
-            projectile.transform.position = new Vector3(
-                player.transform.position.x, 
-                projectile.transform.position.y,
-                projectile.transform.position.z);
+            projectile.transform.position = player.transform.Find(
+                "Projectile Placeholder").transform.position;
         }
         
         // reset projectile if out of boundy
@@ -39,8 +40,10 @@ public class GameManager : MonoBehaviour
         {
             projectileInMotion = false;
             projectileRb.velocity = new Vector3(0, 0, 0);
-            projectile.transform.position = new Vector3(
-                player.transform.position.x, 0.5f, -10.75f);
+            projectile.transform.position = player.transform.Find(
+                "Projectile Placeholder").transform.position;
+
+            audioSource.PlayOneShot(hurtAC);
         }
     }
 }
