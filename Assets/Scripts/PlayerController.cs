@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         // find game-manager
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        gameManager =
+            GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -22,18 +23,21 @@ public class PlayerController : MonoBehaviour
     {
         // user-input to move pedal sideways
         horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(horizontalInput * speed * Time.deltaTime * Vector3.right);
+        transform.Translate(
+            horizontalInput * speed * Time.deltaTime * Vector3.right);
 
         // limit pedal right movement
         if (transform.position.x > boundry)
         {
-            transform.position = new Vector3(boundry, transform.position.y, transform.position.z);
+            transform.position = new Vector3(
+                boundry, transform.position.y, transform.position.z);
         }
 
         // limit pedal left movement
         if (transform.position.x < -boundry)
         {
-            transform.position = new Vector3(-boundry, transform.position.y, transform.position.z);
+            transform.position = new Vector3(
+                -boundry, transform.position.y, transform.position.z);
         }
 
         // for testing purpose
@@ -41,15 +45,16 @@ public class PlayerController : MonoBehaviour
         {
             if (!gameManager.projectileInMotion)
             {
-                GameObject projectile = GameObject.FindGameObjectWithTag("Projectile");
+                GameObject projectile =
+                    GameObject.FindGameObjectWithTag("Projectile");
                 Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-                Projectile projectileScript = projectile.GetComponent<Projectile>();
+                Projectile projectileScript =
+                    projectile.GetComponent<Projectile>();
 
                 float projectileSpeed = projectileScript.speed;
 
                 projectileRb.AddForce(
-                        Vector3.right * projectileSpeed,
-                    ForceMode.Impulse);
+                        Vector3.right * projectileSpeed, ForceMode.Impulse);
 
                 gameManager.projectileInMotion = true;
             }
@@ -60,9 +65,11 @@ public class PlayerController : MonoBehaviour
         {
             if (!gameManager.projectileInMotion)
             {
-                GameObject projectile = GameObject.FindGameObjectWithTag("Projectile");
+                GameObject projectile =
+                    GameObject.FindGameObjectWithTag("Projectile");
                 Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-                Projectile projectileScript = projectile.GetComponent<Projectile>();
+                Projectile projectileScript =
+                    projectile.GetComponent<Projectile>();
 
                 float projectileSpeed = projectileScript.speed;
 

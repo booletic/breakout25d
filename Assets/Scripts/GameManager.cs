@@ -22,7 +22,8 @@ public class GameManager : MonoBehaviour
         projectile = GameObject.FindWithTag("Projectile");
         projectileRb = projectile.GetComponent<Rigidbody>();
         projectileScript = projectile.GetComponent<Projectile>();
-        audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        audioSource =
+            GameObject.Find("Audio Source").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
             projectile.transform.position = player.transform.Find(
                 "Projectile Placeholder").transform.position;
         }
-        
+
         // reset projectile if out of boundy
         if (projectile.transform.position.z < -20)
         {
