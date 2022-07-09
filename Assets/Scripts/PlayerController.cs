@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,24 +5,40 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float horizontalInput;
     public float boundry;
+    public GameObject projectilePrefab;
 
-    private GameManager gameManager;
+    private GameObject projectile;
+    private Rigidbody projectileRb;
+    private Projectile projectileScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        // find game-manager
-        gameManager =
-            GameObject.Find("Game Manager").GetComponent<GameManager>();
+        SpawnProjectile();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // respawn a projectile post destruction
+        if (projectile == null)
+        {
+            SpawnProjectile();
+        }
+
+        float projectileSpeed = projectileScript.speed;
+
         // user-input to move pedal sideways
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(
             horizontalInput * speed * Time.deltaTime * Vector3.right);
+
+        // projectile tracks player
+        if (!projectileScript.inMotion)
+        {
+            projectile.transform.position =
+                transform.Find("Projectile Placeholder").position;
+        }    
 
         // limit pedal right movement
         if (transform.position.x > boundry)
@@ -40,46 +54,27 @@ public class PlayerController : MonoBehaviour
                 -boundry, transform.position.y, transform.position.z);
         }
 
-        // for testing purpose
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (!gameManager.projectileInMotion)
-            {
-                GameObject projectile =
-                    GameObject.FindGameObjectWithTag("Projectile");
-                Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-                Projectile projectileScript =
-                    projectile.GetComponent<Projectile>();
-
-                float projectileSpeed = projectileScript.speed;
-
-                projectileRb.AddForce(
-                        Vector3.right * projectileSpeed, ForceMode.Impulse);
-
-                gameManager.projectileInMotion = true;
-            }
-        }
-
         // launch projectile on user-input
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!gameManager.projectileInMotion)
+            if (!projectileScript.inMotion)
             {
-                GameObject projectile =
-                    GameObject.FindGameObjectWithTag("Projectile");
-                Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-                Projectile projectileScript =
-                    projectile.GetComponent<Projectile>();
-
-                float projectileSpeed = projectileScript.speed;
-
                 projectileRb.AddForce(
                     new Vector3(
                         Random.Range(-1.0f, 1.01f), 0, 1) * projectileSpeed,
                     ForceMode.Impulse);
 
-                gameManager.projectileInMotion = true;
+                projectileScript.inMotion = true;
             }
         }
+    }
+    void SpawnProjectile()
+    {
+        projectile = Instantiate(projectilePrefab);
+        projectile.transform.position = transform.Find(
+                    "Projectile Placeholder").transform.position;
+        projectileRb = projectile.GetComponent<Rigidbody>();
+        projectileScript =
+            projectile.GetComponent<Projectile>();
     }
 }

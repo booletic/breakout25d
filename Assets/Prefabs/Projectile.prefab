@@ -111,11 +111,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd999603e2f13d846a46328c43c8d324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 15
   blipAC: {fileID: 8300000, guid: 71b8cd6de38665041bf0a290f1fe29e5, type: 3}
   hitAC: {fileID: 8300000, guid: 02d627997624f804bb065214e81a09c7, type: 3}
   powerdownAC: {fileID: 8300000, guid: 5e2807283bd957243812423d6bf2cde9, type: 3}
+  hurtAC: {fileID: 8300000, guid: 085821918de440640b9a8a0ebddad506, type: 3}
   hasPowerup: 0
+  inMotion: 0
 --- !u!54 &2863825420932987973
 Rigidbody:
   m_ObjectHideFlags: 0

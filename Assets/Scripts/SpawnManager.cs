@@ -1,6 +1,3 @@
-//using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -12,7 +9,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating(nameof(SpawnPowerup), 1.0f, 10.0f);
+        InvokeRepeating(nameof(SpawnPowerup), 1.0f, 5.0f);
         // spawn enemy
         SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 12);
         SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 10);
@@ -33,7 +30,6 @@ public class SpawnManager : MonoBehaviour
             Instantiate(prefab, new Vector3(i, 0.5f, row),
                 prefab.transform.rotation).transform.SetParent(parent);
         }
-
     }
 
     void SpawnPowerup()
@@ -43,11 +39,12 @@ public class SpawnManager : MonoBehaviour
 
         if (GameObject.FindGameObjectWithTag("Powerup") == null && isNormSize)
         {
-            Instantiate(powerupPrefab, new Vector3(
-                Random.Range(-21.0f, 21.0f),
-                0.5f,
-                Random.Range(-4.0f, 4.0f)),
+            Instantiate(
+                powerupPrefab, new Vector3(
+                    Random.Range(
+                        -21.0f, 21.0f), 0.5f, 16.0f),
                 powerupPrefab.transform.rotation);
         }
     }
+
 }
