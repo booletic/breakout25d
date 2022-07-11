@@ -44,14 +44,14 @@ public class PlayerController : MonoBehaviour
         if (transform.position.x > boundry)
         {
             transform.position = new Vector3(
-                boundry, transform.position.y, transform.position.z);
+                boundry, transform.position.y);
         }
 
         // limit pedal left movement
         if (transform.position.x < -boundry)
         {
             transform.position = new Vector3(
-                -boundry, transform.position.y, transform.position.z);
+                -boundry, transform.position.y);
         }
 
         // launch projectile on user-input
@@ -61,7 +61,21 @@ public class PlayerController : MonoBehaviour
             {
                 projectileRb.AddForce(
                     new Vector3(
-                        Random.Range(-1.0f, 1.01f), 0, 1) * projectileSpeed,
+                        Random.Range(-1.0f, 1.01f), 1) * projectileSpeed,
+                    ForceMode.Impulse);
+
+                projectileScript.inMotion = true;
+            }
+        }
+
+        // for testing purpose
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (!projectileScript.inMotion)
+            {
+                projectileRb.AddForce(
+                    new Vector3(
+                        1, 0) * projectileSpeed,
                     ForceMode.Impulse);
 
                 projectileScript.inMotion = true;

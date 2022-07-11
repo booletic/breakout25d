@@ -10,6 +10,11 @@ public class Projectile : MonoBehaviour
     public AudioClip hurtAC;
     public bool hasPowerup;
     public bool inMotion = false;
+    private readonly float boundary = -16.0f;
+    private readonly float angularThreshold = 0.1f;
+    private Vector3 normalSize = new(0.8f, 0.8f, 1);
+    private Vector3 largeSize = new(1.6f, 1.6f, 1);
+    private readonly int powerupUpTime = 9;
 
     private AudioSource audioSource;
 
@@ -31,7 +36,7 @@ public class Projectile : MonoBehaviour
         }
 
         // if projectile out of boundry
-        if (transform.position.z <= -16.0f)
+        if (transform.position.y <= boundary)
         {
             audioSource.PlayOneShot(hurtAC);
             Destroy(gameObject);
@@ -52,15 +57,10 @@ public class Projectile : MonoBehaviour
         {
             audioSource.PlayOneShot(blipAC);
 
-            if (gameObject.transform.position.z <= 0)
+            if (GetComponent<Rigidbody>().velocity.y <= angularThreshold)
             {
-                gameObject.GetComponent<Rigidbody>().AddForce(
-                    Vector3.forward, ForceMode.Impulse);
-            }
-            else
-            {
-                gameObject.GetComponent<Rigidbody>().AddForce(
-                    Vector3.back, ForceMode.Impulse);
+                GetComponent<Rigidbody>().AddForce(
+                    Vector3.down, ForceMode.Impulse);
             }
         }
 
@@ -84,15 +84,15 @@ public class Projectile : MonoBehaviour
     IEnumerator ScalePowerupRoutine()
     {
         // grow projectile temprorary
-        transform.localScale = new Vector3(1.6f, 0.5f, 1.6f);
-        yield return new WaitForSeconds(15);
-        transform.localScale = new Vector3(0.8f, 0.5f, 0.8f);
+        transform.localScale = largeSize;
+        yield return new WaitForSeconds(powerupUpTime);
+        transform.localScale = normalSize;
         audioSource.PlayOneShot(powerdownAC);
     }
 
     public bool IsNormSize()
     {
         // check if projectile size
-        return transform.localScale.x < 1.0f;
+        return transform.localScale == normalSize;
     }
 }

@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = start; i <= end; i += inc)
         {
-            Instantiate(prefab, new Vector3(i, 0.5f, row),
+            Instantiate(prefab, new Vector3(i, row),
                 prefab.transform.rotation).transform.SetParent(parent);
         }
     }
@@ -42,7 +42,7 @@ public class SpawnManager : MonoBehaviour
             Instantiate(
                 powerupPrefab, new Vector3(
                     Random.Range(
-                        -21.0f, 21.0f), 0.5f, 16.0f),
+                        -21.0f, 21.0f), 16.0f),
                 powerupPrefab.transform.rotation);
         }
     }

@@ -7,6 +7,7 @@ public class Powerup : MonoBehaviour
 
     public AudioClip powerupAC;
     public float speed = 1.5f;
+    private readonly float boundary = -16.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -20,9 +21,9 @@ public class Powerup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += speed * Time.deltaTime * Vector3.back;
+        transform.position += speed * Time.deltaTime * Vector3.down;
 
-        if (transform.position.z <= -16.0f)
+        if (transform.position.y <= boundary)
         {
             Destroy(gameObject);
         }
