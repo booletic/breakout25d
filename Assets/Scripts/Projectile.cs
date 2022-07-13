@@ -4,25 +4,28 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed;
+    public float speed2 = 100;
     public AudioClip blipAC;
     public AudioClip hitAC;
     public AudioClip powerdownAC;
     public AudioClip hurtAC;
     public bool hasPowerup;
     public bool inMotion = false;
-    private readonly float boundary = -16.0f;
-    private readonly float angularThreshold = 0.1f;
+    //private readonly float boundary = -16.0f;
+    private readonly float angularThreshold = 1.0f;
     private Vector3 normalSize = new(0.8f, 0.8f, 1);
     private Vector3 largeSize = new(1.6f, 1.6f, 1);
     private readonly int powerupUpTime = 9;
 
     private AudioSource audioSource;
+    private Rigidbody projectileRb;
 
     // Start is called before the first frame update
     void Start()
     {
         hasPowerup = false;
         audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+        projectileRb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -36,7 +39,29 @@ public class Projectile : MonoBehaviour
         }
 
         // if projectile out of boundry
-        if (transform.position.y <= boundary)
+        //if (transform.position.y <= boundary)
+        //{
+        //    audioSource.PlayOneShot(hurtAC);
+        //    Destroy(gameObject);
+        //}
+
+        //if (inMotion && projectileRb.IsSleeping())
+        //{
+        //    if(transform.position.x <= 0)
+        //    {
+        //        projectileRb.AddForce(Vector3.right * speed, ForceMode.Impulse);
+        //    }
+        //    else
+        //    {
+        //        projectileRb.AddForce(Vector3.left * speed, ForceMode.Impulse);
+        //    }
+        //}
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // destroy projectile if out of boundary
+        if (other.name == "Sensor")
         {
             audioSource.PlayOneShot(hurtAC);
             Destroy(gameObject);
@@ -57,10 +82,20 @@ public class Projectile : MonoBehaviour
         {
             audioSource.PlayOneShot(blipAC);
 
-            if (GetComponent<Rigidbody>().velocity.y <= angularThreshold)
+            if (projectileRb.velocity.y <= angularThreshold)
             {
-                GetComponent<Rigidbody>().AddForce(
-                    Vector3.down, ForceMode.Impulse);
+                if(transform.position.y <= 0)
+                {
+                    projectileRb.AddForce(
+                        speed2 * Time.deltaTime * Vector3.up,
+                        ForceMode.Impulse);
+                }
+                else
+                {
+                    projectileRb.AddForce(
+                        speed2 * Time.deltaTime * Vector3.down,
+                        ForceMode.Impulse);
+                }    
             }
         }
 
@@ -68,16 +103,14 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Right"))
         {
             audioSource.PlayOneShot(blipAC);
-            GetComponent<Rigidbody>().AddForce(speed * Vector3.right,
-                ForceMode.Impulse);
+            projectileRb.AddForce(speed * Vector3.right, ForceMode.Impulse);
         }
 
         // if projectile collide with player left-side
         if (collision.gameObject.CompareTag("Left"))
         {
             audioSource.PlayOneShot(blipAC);
-            GetComponent<Rigidbody>().AddForce(speed * Vector3.left,
-                ForceMode.Impulse);
+            projectileRb.AddForce(speed * Vector3.left, ForceMode.Impulse);
         }
     }
 

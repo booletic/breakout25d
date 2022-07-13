@@ -34,8 +34,19 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnPowerup()
     {
-        bool isNormSize = GameObject.FindWithTag(
-            "Projectile").GetComponent<Projectile>().IsNormSize();
+        bool isNormSize;
+
+        // look for projectile object
+        try
+        {
+            isNormSize = GameObject.FindWithTag(
+                "Projectile").GetComponent<Projectile>().IsNormSize();
+        }
+        catch
+        {
+            isNormSize = false;
+            Debug.Log("no projectile in scene");
+        }
 
         if (GameObject.FindGameObjectWithTag("Powerup") == null && isNormSize)
         {

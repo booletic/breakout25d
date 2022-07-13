@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
     void SpawnProjectile()
     {
         projectile = Instantiate(projectilePrefab);

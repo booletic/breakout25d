@@ -7,7 +7,7 @@ public class Powerup : MonoBehaviour
 
     public AudioClip powerupAC;
     public float speed = 1.5f;
-    private readonly float boundary = -16.0f;
+    //private readonly float boundary = -16.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +23,10 @@ public class Powerup : MonoBehaviour
     {
         transform.position += speed * Time.deltaTime * Vector3.down;
 
-        if (transform.position.y <= boundary)
-        {
-            Destroy(gameObject);
-        }
+        //if (transform.position.y <= boundary)
+        //{
+        //    Destroy(gameObject);
+        //}
 
     }
 
@@ -37,6 +37,12 @@ public class Powerup : MonoBehaviour
         {
             audioSource.PlayOneShot(powerupAC);
             projectileScript.hasPowerup = true;
+            Destroy(gameObject);
+        }
+
+        // destroy object if out of boundary
+        if (other.name == "Sensor")
+        {
             Destroy(gameObject);
         }
     }
