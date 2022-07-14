@@ -4,18 +4,24 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed;
-    public float speed2 = 100;
+    public float coEff = 10.0f;
+    public float maxSpeed = 20.0f;
+
     public AudioClip blipAC;
     public AudioClip hitAC;
     public AudioClip powerdownAC;
     public AudioClip hurtAC;
+
     public bool hasPowerup;
     public bool inMotion = false;
-    //private readonly float boundary = -16.0f;
+
+    public PlayerController playerControllerScript;
+
+    private readonly int powerupUpTime = 9;
     private readonly float angularThreshold = 1.0f;
+
     private Vector3 normalSize = new(0.8f, 0.8f, 1);
     private Vector3 largeSize = new(1.6f, 1.6f, 1);
-    private readonly int powerupUpTime = 9;
 
     private AudioSource audioSource;
     private Rigidbody projectileRb;
@@ -24,7 +30,13 @@ public class Projectile : MonoBehaviour
     void Start()
     {
         hasPowerup = false;
-        audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+
+        audioSource =
+            GameObject.Find("Audio Source").GetComponent<AudioSource>();
+
+        playerControllerScript =
+            GameObject.Find("Player").GetComponent<PlayerController>();
+
         projectileRb = GetComponent<Rigidbody>();
     }
 
@@ -38,24 +50,11 @@ public class Projectile : MonoBehaviour
             StartCoroutine(ScalePowerupRoutine());
         }
 
-        // if projectile out of boundry
-        //if (transform.position.y <= boundary)
-        //{
-        //    audioSource.PlayOneShot(hurtAC);
-        //    Destroy(gameObject);
-        //}
-
-        //if (inMotion && projectileRb.IsSleeping())
-        //{
-        //    if(transform.position.x <= 0)
-        //    {
-        //        projectileRb.AddForce(Vector3.right * speed, ForceMode.Impulse);
-        //    }
-        //    else
-        //    {
-        //        projectileRb.AddForce(Vector3.left * speed, ForceMode.Impulse);
-        //    }
-        //}
+        if (projectileRb.velocity.magnitude > maxSpeed)
+        {
+            projectileRb.velocity =
+                Vector3.ClampMagnitude(projectileRb.velocity, maxSpeed);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -74,6 +73,7 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             audioSource.PlayOneShot(hitAC);
+            playerControllerScript.UpdateScore(5);
             Destroy(collision.gameObject);
         }
 
@@ -87,13 +87,13 @@ public class Projectile : MonoBehaviour
                 if(transform.position.y <= 0)
                 {
                     projectileRb.AddForce(
-                        speed2 * Time.deltaTime * Vector3.up,
+                        coEff * speed * Time.deltaTime * Vector3.up,
                         ForceMode.Impulse);
                 }
                 else
                 {
                     projectileRb.AddForce(
-                        speed2 * Time.deltaTime * Vector3.down,
+                        coEff * speed * Time.deltaTime * Vector3.down,
                         ForceMode.Impulse);
                 }    
             }
@@ -111,6 +111,13 @@ public class Projectile : MonoBehaviour
         {
             audioSource.PlayOneShot(blipAC);
             projectileRb.AddForce(speed * Vector3.left, ForceMode.Impulse);
+        }
+
+        // if projectile collide with player mid-side
+        if (collision.gameObject.CompareTag("Middle"))
+        {
+            audioSource.PlayOneShot(blipAC);
+            projectileRb.AddForce(speed * Vector3.up, ForceMode.Impulse);
         }
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class PlayerController : MonoBehaviour
     public float boundry;
     public GameObject projectilePrefab;
 
+    private int score;
+    public TextMeshProUGUI scoreText;
+
     private GameObject projectile;
     private Rigidbody projectileRb;
     private Projectile projectileScript;
@@ -14,6 +18,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        score = 0;
+        UpdateScore(0);
         SpawnProjectile();
     }
 
@@ -86,10 +92,16 @@ public class PlayerController : MonoBehaviour
     void SpawnProjectile()
     {
         projectile = Instantiate(projectilePrefab);
-        projectile.transform.position = transform.Find(
-                    "Projectile Placeholder").transform.position;
+        projectile.transform.position =
+            transform.Find("Projectile Placeholder").transform.position;
         projectileRb = projectile.GetComponent<Rigidbody>();
         projectileScript =
             projectile.GetComponent<Projectile>();
+    }
+
+    public void UpdateScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        scoreText.text = "Score " + score;
     }
 }

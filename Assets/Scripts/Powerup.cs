@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
+    public float speed = 1.5f;
+    public AudioClip powerupAC;
+
     private AudioSource audioSource;
     private Projectile projectileScript;
-
-    public AudioClip powerupAC;
-    public float speed = 1.5f;
-    //private readonly float boundary = -16.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -22,12 +21,6 @@ public class Powerup : MonoBehaviour
     void Update()
     {
         transform.position += speed * Time.deltaTime * Vector3.down;
-
-        //if (transform.position.y <= boundary)
-        //{
-        //    Destroy(gameObject);
-        //}
-
     }
 
     private void OnTriggerEnter(Collider other)

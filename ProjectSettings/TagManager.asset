@@ -10,6 +10,7 @@ TagManager:
   - Right
   - Left
   - Powerup
+  - Middle
   layers:
   - Default
   - TransparentFX

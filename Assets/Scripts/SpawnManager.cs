@@ -10,10 +10,11 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         InvokeRepeating(nameof(SpawnPowerup), 1.0f, 5.0f);
+
         // spawn enemy
-        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 12);
-        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 10);
-        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 8);
+        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 11);
+        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 9);
+        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 7);
     }
 
     // Update is called once per frame
@@ -34,27 +35,18 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnPowerup()
     {
-        bool isNormSize;
+        GameObject projectile = GameObject.FindWithTag("Projectile");
 
-        // look for projectile object
-        try
+        if (projectile != null)
         {
-            isNormSize = GameObject.FindWithTag(
-                "Projectile").GetComponent<Projectile>().IsNormSize();
-        }
-        catch
-        {
-            isNormSize = false;
-            Debug.Log("no projectile in scene");
-        }
-
-        if (GameObject.FindGameObjectWithTag("Powerup") == null && isNormSize)
-        {
-            Instantiate(
-                powerupPrefab, new Vector3(
-                    Random.Range(
-                        -21.0f, 21.0f), 16.0f),
-                powerupPrefab.transform.rotation);
+            if(projectile.GetComponent<Projectile>().IsNormSize())
+            {
+                Instantiate(
+                    powerupPrefab, new Vector3(
+                        Random.Range(
+                            -21.0f, 21.0f), 16.0f),
+                    powerupPrefab.transform.rotation);
+            }
         }
     }
 
