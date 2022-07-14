@@ -8,14 +8,11 @@ public class Projectile : MonoBehaviour
     public float maxSpeed = 20.0f;
 
     public AudioClip blipAC;
-    public AudioClip hitAC;
     public AudioClip powerdownAC;
     public AudioClip hurtAC;
 
     public bool hasPowerup;
     public bool inMotion = false;
-
-    public PlayerController playerControllerScript;
 
     private readonly int powerupUpTime = 9;
     private readonly float angularThreshold = 1.0f;
@@ -33,9 +30,6 @@ public class Projectile : MonoBehaviour
 
         audioSource =
             GameObject.Find("Audio Source").GetComponent<AudioSource>();
-
-        playerControllerScript =
-            GameObject.Find("Player").GetComponent<PlayerController>();
 
         projectileRb = GetComponent<Rigidbody>();
     }
@@ -69,14 +63,6 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if projectile collides with enemy
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            audioSource.PlayOneShot(hitAC);
-            playerControllerScript.UpdateScore(5);
-            Destroy(collision.gameObject);
-        }
-
         // avoid projectile from parallel bouncing horizontally
         if (collision.gameObject.CompareTag("Wall"))
         {

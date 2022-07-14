@@ -491,7 +491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   horizontalInput: 0
-  boundry: 21
+  boundry: 22
   projectilePrefab: {fileID: 2863825420932987972, guid: ee13ce706b8676f489cb7e7c9664974c, type: 3}
   scoreText: {fileID: 1084998910}
 --- !u!4 &1017143658
@@ -615,7 +615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 110, y: -32}
+  m_AnchoredPosition: {x: 125, y: -32}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1084998910
@@ -638,7 +638,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score
+  m_text: 'Score 0
 
 '
   m_isRightToLeft: 0
