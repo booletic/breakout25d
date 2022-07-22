@@ -20,13 +20,18 @@ public class Projectile : MonoBehaviour
     private Vector3 normalSize = new(0.8f, 0.8f, 1);
     private Vector3 largeSize = new(1.6f, 1.6f, 1);
 
+    private GameManager gameManagerScript;
     private AudioSource audioSource;
     private Rigidbody projectileRb;
+
 
     // Start is called before the first frame update
     void Start()
     {
         hasPowerup = false;
+
+        gameManagerScript =
+            GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         audioSource =
             GameObject.Find("Audio Source").GetComponent<AudioSource>();
@@ -58,6 +63,7 @@ public class Projectile : MonoBehaviour
         {
             audioSource.PlayOneShot(hurtAC);
             Destroy(gameObject);
+            gameManagerScript.GameOver();
         }
     }
 
