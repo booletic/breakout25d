@@ -15,7 +15,6 @@ public class Projectile : MonoBehaviour
     public bool inMotion = false;
 
     private readonly int powerupUpTime = 9;
-    private readonly float angularThreshold = 1.0f;
 
     private Vector3 normalSize = new(0.8f, 0.8f, 1);
     private Vector3 largeSize = new(1.6f, 1.6f, 1);
@@ -69,28 +68,6 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // avoid projectile from parallel bouncing horizontally
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            audioSource.PlayOneShot(blipAC);
-
-            if (projectileRb.velocity.y <= angularThreshold)
-            {
-                if(transform.position.y <= 0)
-                {
-                    projectileRb.AddForce(
-                        coEff * speed * Time.deltaTime * Vector3.up,
-                        ForceMode.Impulse);
-                }
-                else
-                {
-                    projectileRb.AddForce(
-                        coEff * speed * Time.deltaTime * Vector3.down,
-                        ForceMode.Impulse);
-                }    
-            }
-        }
-
         // if projectile collide with player right-side
         if (collision.gameObject.CompareTag("Right"))
         {
