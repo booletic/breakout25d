@@ -68,6 +68,11 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // if projectile collide with a wall
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            audioSource.PlayOneShot(blipAC);
+        }
         // if projectile collide with player right-side
         if (collision.gameObject.CompareTag("Right"))
         {

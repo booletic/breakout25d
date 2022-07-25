@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        SceneManager.LoadScene("GameOverScene");
+        SceneManager.LoadScene("EndScene");
+    }
+
+    public void GameStart()
+    {
+        SceneManager.LoadScene("GameScene");
     }
 }

@@ -12,9 +12,7 @@ public class SpawnManager : MonoBehaviour
         InvokeRepeating(nameof(SpawnPowerup), 1.0f, 5.0f);
 
         // spawn enemy
-        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 11);
-        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 9);
-        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 7);
+        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 3);
     }
 
     // Update is called once per frame
@@ -26,10 +24,13 @@ public class SpawnManager : MonoBehaviour
     void SpawnEnemyRow(GameObject prefab, Transform parent,
         int start, int end, int inc, int row)
     {
-        for (int i = start; i <= end; i += inc)
+        for (int j = 11; j > 11 - (row * 2); j -= 2)
         {
-            Instantiate(prefab, new Vector3(i, row),
-                prefab.transform.rotation).transform.SetParent(parent);
+            for (int i = start; i <= end; i += inc)
+            {
+                Instantiate(prefab, new Vector3(i, j),
+                    prefab.transform.rotation).transform.SetParent(parent);
+            }
         }
     }
 
