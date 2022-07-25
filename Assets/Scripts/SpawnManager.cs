@@ -5,14 +5,20 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject powerupPrefab;
     public Transform enemyParent;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameManager =
+            GameObject.Find("Game Manager").GetComponent<GameManager>();
+
+        gameManager.isGameActive = true;
+
         InvokeRepeating(nameof(SpawnPowerup), 1.0f, 5.0f);
 
         // spawn enemy
-        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, 3);
+        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, gameManager.level);
     }
 
     // Update is called once per frame
