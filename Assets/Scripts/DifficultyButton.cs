@@ -27,7 +27,7 @@ public class DifficultyButton : MonoBehaviour
 
     void SetDifficulty()
     {
-        gameManger.GameStart(difficulty);
+        gameManger.GameStart(difficulty, 0);
     }
 
 }

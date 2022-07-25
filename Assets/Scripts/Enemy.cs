@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public AudioClip hitAC;
     public ParticleSystem breakdownParticle;
     private AudioSource audioSource;
-    private PlayerController playerControllerScript;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -15,8 +15,8 @@ public class Enemy : MonoBehaviour
         audioSource =
             GameObject.Find("Audio Source").GetComponent<AudioSource>();
 
-        playerControllerScript =
-            GameObject.Find("Player").GetComponent<PlayerController>();
+        gameManager =
+            GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
         // if projectile collides with enemy
         audioSource.PlayOneShot(hitAC);
         Instantiate(breakdownParticle, transform.position, transform.rotation);
-        playerControllerScript.UpdateScore(5);
+        gameManager.UpdateScore();
         Destroy(gameObject, 0.1f);
     }
 }

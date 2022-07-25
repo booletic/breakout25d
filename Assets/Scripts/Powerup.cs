@@ -6,14 +6,14 @@ public class Powerup : MonoBehaviour
     public AudioClip powerupAC;
 
     private AudioSource audioSource;
-    private Projectile projectileScript;
+    private Projectile projectile;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource =
             GameObject.Find("Audio Source").GetComponent<AudioSource>();
-        projectileScript =
+        projectile =
             GameObject.FindWithTag("Projectile").GetComponent<Projectile>();
     }
 
@@ -29,7 +29,7 @@ public class Powerup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             audioSource.PlayOneShot(powerupAC);
-            projectileScript.hasPowerup = true;
+            projectile.hasPowerup = true;
             Destroy(gameObject);
         }
 

@@ -4,8 +4,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed;
-    public float coEff = 10.0f;
-    public float maxSpeed = 20.0f;
+    //public float coEff = 10.0f;
+    public float maxSpeed;
 
     public AudioClip blipAC;
     public AudioClip powerdownAC;
@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
     private Vector3 normalSize = new(0.8f, 0.8f, 1);
     private Vector3 largeSize = new(1.6f, 1.6f, 1);
 
-    private GameManager gameManagerScript;
+    private GameManager gameManager;
     private AudioSource audioSource;
     private Rigidbody projectileRb;
 
@@ -29,13 +29,16 @@ public class Projectile : MonoBehaviour
     {
         hasPowerup = false;
 
-        gameManagerScript =
+        gameManager =
             GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         audioSource =
             GameObject.Find("Audio Source").GetComponent<AudioSource>();
 
         projectileRb = GetComponent<Rigidbody>();
+
+        // adjust speed [easy, normal, hard]
+        maxSpeed = gameManager.speed;
     }
 
     // Update is called once per frame
@@ -63,7 +66,7 @@ public class Projectile : MonoBehaviour
         {
             audioSource.PlayOneShot(hurtAC);
             Destroy(gameObject);
-            gameManagerScript.GameOver();
+            gameManager.GameOver();
         }
     }
 

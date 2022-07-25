@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
     public float boundry;
     public GameObject projectilePrefab;
 
-    private int score;
-    public TextMeshProUGUI scoreText;
+    //private int score;
+    //public TextMeshProUGUI scoreText;
 
     private GameObject projectile;
     private Rigidbody projectileRb;
@@ -18,8 +18,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        score = 0;
-        UpdateScore(0);
         SpawnProjectile();
     }
 
@@ -74,7 +72,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // for testing purpose
+        // for testing: launch projectile 90 degree
         if (Input.GetKeyDown(KeyCode.T))
         {
             if (!projectileScript.inMotion)
@@ -97,11 +95,5 @@ public class PlayerController : MonoBehaviour
         projectileRb = projectile.GetComponent<Rigidbody>();
         projectileScript =
             projectile.GetComponent<Projectile>();
-    }
-
-    public void UpdateScore(int scoreToAdd)
-    {
-        score += scoreToAdd;
-        scoreText.text = "Score " + score;
     }
 }
