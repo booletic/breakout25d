@@ -14,6 +14,8 @@ public class MenuButton : MonoBehaviour
         button = GetComponent<Button>();
         gameManager =
             GameObject.Find("Game Manager").GetComponent<GameManager>();
+
+        // load menu when on button click
         button.onClick.AddListener(LoadMenu);
     }
 
@@ -25,6 +27,7 @@ public class MenuButton : MonoBehaviour
 
     void LoadMenu()
     {
+        // load menu scene
         gameManager.LoadMenu();
     }
 }

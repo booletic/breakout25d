@@ -50,6 +50,7 @@ public class Projectile : MonoBehaviour
 
         if (projectileRb.velocity.magnitude > maxSpeed)
         {
+            // limit projectile velocity
             projectileRb.velocity =
                 Vector3.ClampMagnitude(projectileRb.velocity, maxSpeed);
         }
