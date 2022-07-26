@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,6 +7,8 @@ public class Enemy : MonoBehaviour
     private AudioSource audioSource;
     private GameManager gameManager;
 
+    private int lives;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,12 +17,15 @@ public class Enemy : MonoBehaviour
 
         gameManager =
             GameObject.Find("Game Manager").GetComponent<GameManager>();
+
+        lives = (int)(Mathf.Log(gameManager.level) + 1);
+        Debug.Log(lives);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -31,6 +34,15 @@ public class Enemy : MonoBehaviour
         audioSource.PlayOneShot(hitAC);
         Instantiate(breakdownParticle, transform.position, transform.rotation);
         gameManager.UpdateScore();
-        Destroy(gameObject, 0.1f);
+
+        if (lives <= 1)
+        {
+            Destroy(gameObject, 0.1f);
+        }
+        else
+        {
+            lives--;
+            GetComponent<Renderer>().material.color *= 0.7f;
+        }
     }
 }

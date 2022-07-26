@@ -10,15 +10,17 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int max = 5;
+
         gameManager =
             GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         gameManager.isGameActive = true;
 
-        InvokeRepeating(nameof(SpawnPowerup), 1.0f, 5.0f);
+        InvokeRepeating(nameof(SpawnPowerup), 1.0f, Random.Range(10.0f, 20.0f));
 
         // spawn enemy
-        SpawnEnemyRow(enemyPrefab, enemyParent, -22, 22, 4, gameManager.level);
+        SpawnEnemyRow(enemyPrefab, enemyParent, 4, gameManager.level % max);
     }
 
     // Update is called once per frame
@@ -27,12 +29,17 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    void SpawnEnemyRow(GameObject prefab, Transform parent,
-        int start, int end, int inc, int row)
+    void SpawnEnemyRow(GameObject prefab, Transform parent, int inc, int row)
     {
-        for (int j = 11; j > 11 - (row * 2); j -= 2)
+        int startX = -22;
+        int endX = 22;
+        int firstRow = 11;
+
+        // number of rows to spawn
+        for (int j = firstRow; j > firstRow - (row * 2); j -= 2)
         {
-            for (int i = start; i <= end; i += inc)
+            // number of enemy per row
+            for (int i = startX; i <= endX; i += inc)
             {
                 Instantiate(prefab, new Vector3(i, j),
                     prefab.transform.rotation).transform.SetParent(parent);
@@ -42,11 +49,12 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnPowerup()
     {
+        // only spawn powerup if projectile exist
         GameObject projectile = GameObject.FindWithTag("Projectile");
 
         if (projectile != null)
         {
-            if(projectile.GetComponent<Projectile>().IsNormSize())
+            if (projectile.GetComponent<Projectile>().IsNormSize())
             {
                 Instantiate(
                     powerupPrefab, new Vector3(

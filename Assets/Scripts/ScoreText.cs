@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class ScoreText : MonoBehaviour
 {
@@ -12,12 +10,13 @@ public class ScoreText : MonoBehaviour
         gameManager =
             GameObject.Find("Game Manager").GetComponent<GameManager>();
 
+        // force to refresh score on scene load
         GetComponent<TextMeshProUGUI>().text = "Score " + gameManager.score;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

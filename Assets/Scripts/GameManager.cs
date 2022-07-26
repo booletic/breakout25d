@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +8,7 @@ public class GameManager : MonoBehaviour
     public int speed;
     public int score;
     public int points;
+    public int maxLevel;
     public bool isGameActive;
     public GameManager EnemyParent;
 
@@ -19,6 +18,7 @@ public class GameManager : MonoBehaviour
         level = 1;
         score = 0;
         points = 5;
+        maxLevel = 100;
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
             {
                 level++;
 
-                if (level > 5)
+                if (level > maxLevel)
                 {
                     GameOver();
                 }
@@ -50,15 +50,26 @@ public class GameManager : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
+
+        // quit game when pressing escape
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Quit!");
+            Application.Quit();
+        }
     }
 
     int EnemyAlive()
     {
+        // return child count of enemy parent
         return GameObject.Find("Enemy Parent").transform.childCount;
     }
 
     public void GameOver()
     {
+        // reset level
+        level = 1;
+
         // load game-over scene
         isGameActive = false;
         SceneManager.LoadScene("EndScene");
@@ -80,6 +91,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore()
     {
+        // calculate score and update it to screen
         score += points * speed;
         GameObject.Find("Score Text").GetComponent<TextMeshProUGUI>().text = "Score " + score;
     }

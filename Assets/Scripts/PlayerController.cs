@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -42,7 +41,7 @@ public class PlayerController : MonoBehaviour
         {
             projectile.transform.position =
                 transform.Find("Projectile Placeholder").position;
-        }    
+        }
 
         // limit pedal right movement
         if (transform.position.x > boundry)
@@ -61,6 +60,8 @@ public class PlayerController : MonoBehaviour
         // launch projectile on user-input
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            GameObject.Find("Start Text").SetActive(false);
+
             if (!projectileScript.inMotion)
             {
                 projectileRb.AddForce(
@@ -89,6 +90,7 @@ public class PlayerController : MonoBehaviour
 
     void SpawnProjectile()
     {
+        // instantiate a projectile and place it in the placeholder
         projectile = Instantiate(projectilePrefab);
         projectile.transform.position =
             transform.Find("Projectile Placeholder").transform.position;

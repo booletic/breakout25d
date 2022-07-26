@@ -1,19 +1,19 @@
 using TMPro;
 using UnityEngine;
 
-public class GameOverText : MonoBehaviour
+public class LevelText : MonoBehaviour
 {
     private GameManager gameManager;
-
     // Start is called before the first frame update
     void Start()
     {
         gameManager =
             GameObject.Find("Game Manager").GetComponent<GameManager>();
 
-        // append game-over text with final score
-        GetComponent<TextMeshProUGUI>().text = "Game Over, Score " + gameManager.score;
+        // display level on scene load
+        GetComponent<TextMeshProUGUI>().text = "Level " + gameManager.level;
     }
+
     // Update is called once per frame
     void Update()
     {
