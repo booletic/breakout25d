@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
             GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         lives = (int)(Mathf.Log(gameManager.level) + 1);
-        Debug.Log(lives);
+        //Debug.Log(lives);
     }
 
     // Update is called once per frame

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
     public int points;
     public int maxLevel;
     public bool isGameActive;
-    public GameManager EnemyParent;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
         score = 0;
         points = 5;
         maxLevel = 100;
+        animator.SetTrigger("In");
     }
 
     // Update is called once per frame
@@ -45,9 +47,12 @@ public class GameManager : MonoBehaviour
         // for testing: destroy all enemies
         if (Input.GetKeyDown(KeyCode.B))
         {
-            foreach (Transform child in GameObject.Find("Enemy Parent").transform)
+            if (SceneManager.GetActiveScene().name == "GameScene")
             {
-                Destroy(child.gameObject);
+                foreach (Transform child in GameObject.Find("Enemy Parent").transform)
+                {
+                    Destroy(child.gameObject);
+                }
             }
         }
 
@@ -56,6 +61,16 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Quit!");
             Application.Quit();
+        }
+
+        // return to menu if in end scene
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (SceneManager.GetActiveScene().name == "EndScene")
+            {
+                LoadMenu();
+            }
+
         }
     }
 
@@ -72,21 +87,22 @@ public class GameManager : MonoBehaviour
 
         // load game-over scene
         isGameActive = false;
-        SceneManager.LoadScene("EndScene");
+        StartCoroutine(Fade("EndScene"));
     }
 
     public void GameStart(int speed, int score)
     {
         // load play scene
+        isGameActive = false;
         this.speed = speed;
         this.score = score;
-        SceneManager.LoadScene("GameScene");
+        StartCoroutine(Fade("GameScene"));
     }
 
     public void LoadMenu()
     {
         // load menu scene
-        SceneManager.LoadScene("MenuScene");
+        StartCoroutine(Fade("MenuScene"));
     }
 
     public void UpdateScore()
@@ -94,5 +110,14 @@ public class GameManager : MonoBehaviour
         // calculate score and update it to screen
         score += points * speed;
         GameObject.Find("Score Text").GetComponent<TextMeshProUGUI>().text = "Score " + score;
+    }
+
+    IEnumerator Fade(string scene)
+    {
+        // fade-in and fade-out
+        animator.SetTrigger("Out");
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene(scene);
+        animator.SetTrigger("In");
     }
 }
