@@ -11,6 +11,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         int max = 5;
+        int rows = 1;
 
         gameManager =
             GameObject.Find("Game Manager").GetComponent<GameManager>();
@@ -20,7 +21,8 @@ public class SpawnManager : MonoBehaviour
         InvokeRepeating(nameof(SpawnPowerup), 1.0f, Random.Range(10.0f, 20.0f));
 
         // spawn enemy
-        SpawnEnemyRow(enemyPrefab, enemyParent, 4, gameManager.level % max);
+        rows = Mathf.Max(1, gameManager.level % max);
+        SpawnEnemyRow(enemyPrefab, enemyParent, 4, rows);
     }
 
     // Update is called once per frame
