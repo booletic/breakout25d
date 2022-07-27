@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
         level = 1;
         score = 0;
         points = 5;
-        maxLevel = 100;
+        maxLevel = 50;
         animator.SetTrigger("In");
     }
 
