@@ -723,7 +723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   horizontalInput: 0
-  boundry: 22
+  boundry: 23
   projectilePrefab: {fileID: 2863825420932987972, guid: ee13ce706b8676f489cb7e7c9664974c, type: 3}
 --- !u!4 &1017143658
 Transform:
