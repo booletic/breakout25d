@@ -5,13 +5,13 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject powerupPrefab;
     public Transform enemyParent;
+    public int maxRows = 5;
     private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        int max = 5;
-        int rows = 1;
+        int currentRows;
 
         gameManager =
             GameObject.Find("Game Manager").GetComponent<GameManager>();
@@ -21,8 +21,8 @@ public class SpawnManager : MonoBehaviour
         InvokeRepeating(nameof(SpawnPowerup), 1.0f, Random.Range(10.0f, 20.0f));
 
         // spawn enemy
-        rows = Mathf.Max(1, gameManager.level % max);
-        SpawnEnemyRow(enemyPrefab, enemyParent, 4, rows);
+        currentRows = ((gameManager.level - 1) % maxRows) + 1;
+        SpawnEnemyRow(enemyPrefab, enemyParent, 4, currentRows);
     }
 
     // Update is called once per frame
