@@ -1,7 +1,5 @@
 # Breakout 2.5D
 
-___
-
 ## Introduction
 
 This game is similar to the classic breakout game but with a twist from soul-like games. There are three difficulty levels (easy, medium, and hard). Each difficulty adjusts the max velocity of the ball.
@@ -13,8 +11,6 @@ The game has the three most important factors of a game:
 * A player (the paddle).
 * A non-playing character (the blocks).
 * Randomness (launch direction and spawn rate of powerups)
-
-___
 
 ## The Project
 
@@ -47,7 +43,6 @@ It has life, its starts with one life and max at 5. The life of each block is ad
 ### The Powerup
 
 It spawns at random intervals using invoke repeat function. When the player consumes the powerup, the ball grows in size for a limited time, making it easy to hit.
-___
 
 ## The Design
 
@@ -74,8 +69,6 @@ Some key binds for testing purposes:
 
 * _B_ Destroys all blocks in the scene (test the level progression).
 * _T_ Launches the ball at 90 degrees (tests the tilted walls).
-
-___
 
 ## Conclusion
 
