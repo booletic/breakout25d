@@ -72,6 +72,6 @@ Some key binds for testing purposes:
 
 ## Conclusion
 
-Final thoughts, this game utilizes many concepts to make the game coherent. The Game Manager controls the flow of scenes and preserves data such as score and level. It is also a singleton, which means there will only be one it persists among states as a way of management and data passing. Moreover, A coroutine handles the time out of powerups.
+This game utilizes many concepts to make the game coherent. The Game Manager controls the flow of scenes and preserves data such as score and level. It is also a singleton, which means there will only be one it persists among states as a way of management and data passing. Moreover, A coroutine handles the time out of powerups.
 
 Lastly, the level progression follows a mathematical model where a block requires more hits to get destroyed. There are also visual cues to show when a block has more than one life. In Addition, particle effects and audio clips enhance the user experience.
