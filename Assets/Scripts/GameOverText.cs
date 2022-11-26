@@ -14,9 +14,4 @@ public class GameOverText : MonoBehaviour
         // append game-over text with final score
         GetComponent<TextMeshProUGUI>().text = "Game Over, Score " + gameManager.score;
     }
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

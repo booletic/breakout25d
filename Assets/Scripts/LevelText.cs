@@ -13,10 +13,4 @@ public class LevelText : MonoBehaviour
         // display level on scene load
         GetComponent<TextMeshProUGUI>().text = "Level " + gameManager.level;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

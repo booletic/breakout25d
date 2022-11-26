@@ -25,12 +25,6 @@ public class SpawnManager : MonoBehaviour
         SpawnEnemyRow(enemyPrefab, enemyParent, 4, currentRows);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void SpawnEnemyRow(GameObject prefab, Transform parent, int inc, int row)
     {
         int startX = -22;

@@ -58,8 +58,10 @@ public class GameManager : MonoBehaviour
 
         // quit game when pressing escape
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("Quit!");
+        {        
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #endif
             Application.Quit();
         }
 
@@ -86,7 +88,7 @@ public class GameManager : MonoBehaviour
         level = 1;
 
         // load game-over scene
-        isGameActive = false;
+        isGameActive = false; 
         StartCoroutine(Fade("EndScene"));
     }
 

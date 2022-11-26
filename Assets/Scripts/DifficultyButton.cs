@@ -17,12 +17,6 @@ public class DifficultyButton : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void SetDifficulty()
     {
         // params: projectile speed, initial score

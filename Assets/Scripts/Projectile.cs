@@ -20,8 +20,8 @@ public class Projectile : MonoBehaviour
     private Vector3 largeSize = new(1.6f, 1.6f, 1);
 
     private GameManager gameManager;
-    private AudioSource audioSource;
-    private Rigidbody projectileRb;
+    public AudioSource AudioSource { get; private set; }
+    public Rigidbody ProjectileRb { get; private set; }
 
 
     // Start is called before the first frame update
@@ -29,13 +29,13 @@ public class Projectile : MonoBehaviour
     {
         hasPowerup = false;
 
-        gameManager =
+        gameManager = 
             GameObject.Find("Game Manager").GetComponent<GameManager>();
 
-        audioSource =
+        AudioSource =
             GameObject.Find("Audio Source").GetComponent<AudioSource>();
 
-        projectileRb = GetComponent<Rigidbody>();
+        ProjectileRb = GetComponent<Rigidbody>();
 
         // adjust speed [easy, normal, hard]
         maxSpeed = gameManager.speed;
@@ -51,11 +51,11 @@ public class Projectile : MonoBehaviour
             StartCoroutine(ScalePowerupRoutine());
         }
 
-        if (projectileRb.velocity.magnitude > maxSpeed)
+        if (ProjectileRb.velocity.magnitude > maxSpeed)
         {
             // limit projectile velocity
-            projectileRb.velocity =
-                Vector3.ClampMagnitude(projectileRb.velocity, maxSpeed);
+            ProjectileRb.velocity =
+                Vector3.ClampMagnitude(ProjectileRb.velocity, maxSpeed);
         }
     }
 
@@ -64,38 +64,38 @@ public class Projectile : MonoBehaviour
         // destroy projectile if out of boundary
         if (other.name == "Sensor")
         {
-            audioSource.PlayOneShot(hurtAC);
+            AudioSource.PlayOneShot(hurtAC);
             Destroy(gameObject);
             gameManager.GameOver();
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public virtual void OnCollisionEnter(Collision collision)
     {
         // if projectile collide with a wall
         if (collision.gameObject.CompareTag("Wall"))
         {
-            audioSource.PlayOneShot(blipAC);
+            AudioSource.PlayOneShot(blipAC);
         }
         // if projectile collide with player right-side
         if (collision.gameObject.CompareTag("Right"))
         {
-            audioSource.PlayOneShot(blipAC);
-            projectileRb.AddForce(speed * Vector3.right, ForceMode.Impulse);
+            AudioSource.PlayOneShot(blipAC);
+            ProjectileRb.AddForce(speed * Vector3.right, ForceMode.Impulse);
         }
 
         // if projectile collide with player left-side
         if (collision.gameObject.CompareTag("Left"))
         {
-            audioSource.PlayOneShot(blipAC);
-            projectileRb.AddForce(speed * Vector3.left, ForceMode.Impulse);
+            AudioSource.PlayOneShot(blipAC);
+            ProjectileRb.AddForce(speed * Vector3.left, ForceMode.Impulse);
         }
 
         // if projectile collide with player mid-side
         if (collision.gameObject.CompareTag("Middle"))
         {
-            audioSource.PlayOneShot(blipAC);
-            projectileRb.AddForce(speed * Vector3.up, ForceMode.Impulse);
+            AudioSource.PlayOneShot(blipAC);
+            ProjectileRb.AddForce(speed * Vector3.up, ForceMode.Impulse);
         }
     }
 
@@ -105,7 +105,7 @@ public class Projectile : MonoBehaviour
         transform.localScale = largeSize;
         yield return new WaitForSeconds(powerupUpTime);
         transform.localScale = normalSize;
-        audioSource.PlayOneShot(powerdownAC);
+        AudioSource.PlayOneShot(powerdownAC);
     }
 
     public bool IsNormSize()

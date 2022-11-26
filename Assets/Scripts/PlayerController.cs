@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -6,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float horizontalInput;
     public float boundry;
     public GameObject projectilePrefab;
+    public GameObject projectileCrazyPrefab;
 
     //private int score;
     //public TextMeshProUGUI scoreText;
@@ -17,7 +19,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnProjectile();
+        var temp = SpawnProjectile();
+        GameObject.Find("Start Text").GetComponent<TextMeshProUGUI>().text = "press < space > to start\n" + temp;
     }
 
     // Update is called once per frame
@@ -88,14 +91,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void SpawnProjectile()
+    string SpawnProjectile()
     {
         // instantiate a projectile and place it in the placeholder
-        projectile = Instantiate(projectilePrefab);
+        float temp = Random.Range(0.0f, 1.0f);
+
+        if (temp < 0.5f)
+        {
+            projectile = Instantiate(projectilePrefab);
+        }
+        else
+        {
+            projectile = Instantiate(projectileCrazyPrefab);
+        }
+        
         projectile.transform.position =
             transform.Find("Projectile Placeholder").transform.position;
         projectileRb = projectile.GetComponent<Rigidbody>();
         projectileScript =
             projectile.GetComponent<Projectile>();
+
+        if (projectile.name.Contains("Crazy"))
+            return "you got a crazy projectile";
+        else
+            return "you got a normal projectile";
     }
 }

@@ -22,12 +22,6 @@ public class Enemy : MonoBehaviour
         //Debug.Log(lives);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         // if projectile collides with enemy

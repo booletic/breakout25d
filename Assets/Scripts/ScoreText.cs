@@ -13,10 +13,4 @@ public class ScoreText : MonoBehaviour
         // force to refresh score on scene load
         GetComponent<TextMeshProUGUI>().text = "Score " + gameManager.score;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
